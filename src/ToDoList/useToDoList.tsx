@@ -1,9 +1,13 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, DragEvent } from 'react';
 
 export function useToDoList() {
   const [newItem, setNewItem] = useState('');
   const [toDoItems, setToDoItems] = useState<string[]>([]);
   const [completedItems, setCompletedItems] = useState<string[]>([]);
+
+  const [currentlyDraggedItem, setCurrentlyDraggedItem] = useState<
+    string | null
+  >(null);
 
   const addToDoItem = (text: string) => {
     setToDoItems([...toDoItems, text]);
@@ -22,11 +26,35 @@ export function useToDoList() {
     setNewItem('');
   };
 
+  const startDragging = (item: string) => () => {
+    setCurrentlyDraggedItem(item);
+  };
+
+  const handleDropOnCompleted = () => {
+    if (currentlyDraggedItem) {
+      addCompletedItem(currentlyDraggedItem);
+    }
+  };
+
+  const handleDropOnToDo = () => {
+    if (currentlyDraggedItem) {
+      addToDoItem(currentlyDraggedItem);
+    }
+  };
+
+  const handleDragOver = (event: DragEvent) => {
+    event.preventDefault();
+  };
+
   return {
     handleInputChange,
     handleNewItem,
     newItem,
     toDoItems,
     completedItems,
+    startDragging,
+    handleDropOnCompleted,
+    handleDropOnToDo,
+    handleDragOver,
   };
 }
