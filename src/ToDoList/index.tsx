@@ -1,4 +1,5 @@
 import { useToDoList } from './useToDoList';
+import styles from './ToDoList.module.css';
 
 export const ToDoList = () => {
   const {
@@ -11,7 +12,7 @@ export const ToDoList = () => {
 
   return (
     <div>
-      <div>
+      <div className={styles.inputWrapper}>
         <input
           placeholder="Add new item"
           onChange={handleInputChange}
@@ -19,24 +20,26 @@ export const ToDoList = () => {
         />
         <button onClick={handleNewItem}>Add</button>
       </div>
-      <div>
-        <h2>To do:</h2>
-        <div>
-          {toDoItems.map((item) => (
-            <p key={item}>{item}</p>
-          ))}
+      <div className={styles.listWrapper}>
+        <div className={styles.list}>
+          <h3>To do:</h3>
+          <div>
+            {toDoItems.map((item) => (
+              <p className={styles.item} key={item}>
+                {item}
+              </p>
+            ))}
+          </div>
         </div>
-      </div>
-      <div>
-        <h2>Completed:</h2>
-        <div>
-          {completedItems.map((item) => (
-            <p>
-              {' '}
-              key={item}
-              {item}
-            </p>
-          ))}
+        <div className={styles.list}>
+          <h3>Completed:</h3>
+          <div>
+            {completedItems.map((item) => (
+              <p className={styles.item} key={item}>
+                {item}
+              </p>
+            ))}
+          </div>
         </div>
       </div>
     </div>
