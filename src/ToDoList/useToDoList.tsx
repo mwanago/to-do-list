@@ -1,55 +1,29 @@
-import { ChangeEvent, useState, DragEvent } from 'react';
+import { useState, DragEvent } from 'react';
+import { useInput } from './useInput';
+import { useList } from './useList.tsx';
 
 export function useToDoList() {
-  const [newItem, setNewItem] = useState('');
-  const [toDoItems, setToDoItems] = useState<string[]>([]);
-  const [completedItems, setCompletedItems] = useState<string[]>([]);
+  const { handleInputChange, newItem, clearInput } = useInput();
 
   const [currentlyDraggedItem, setCurrentlyDraggedItem] = useState<
     string | null
   >(null);
 
-  const addToDoItem = (text: string) => {
-    if (toDoItems.includes(text)) {
-      return;
-    }
-    setToDoItems([...toDoItems, text]);
-  };
+  const {
+    items: toDoItems,
+    removeItem: removeToDoItem,
+    addItem: addToDoItem,
+  } = useList();
 
-  const removeToDoItem = (text: string) => {
-    const index = toDoItems.indexOf(text);
-    if (index === -1) {
-      return;
-    }
-    const newItems = [...toDoItems];
-    newItems.splice(index, 1);
-    setToDoItems(newItems);
-  };
-
-  const addCompletedItem = (text: string) => {
-    if (completedItems.includes(text)) {
-      return;
-    }
-    setCompletedItems([...completedItems, text]);
-  };
-
-  const removeCompletedItem = (text: string) => {
-    const index = completedItems.indexOf(text);
-    if (index === -1) {
-      return;
-    }
-    const newItems = [...completedItems];
-    newItems.splice(index, 1);
-    setCompletedItems(newItems);
-  };
-
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setNewItem(event.target.value);
-  };
+  const {
+    items: completedItems,
+    removeItem: removeCompletedItem,
+    addItem: addCompletedItem,
+  } = useList();
 
   const handleNewItem = () => {
     addToDoItem(newItem);
-    setNewItem('');
+    clearInput();
   };
 
   const startDragging = (item: string) => () => {
