@@ -5,17 +5,3 @@
 .listWrapper {
   display: flex;
 }
-
-.list {
-  width: 400px;
-  min-height: 400px;
-  background: rgb(0, 0, 0, 0.1);
-  margin: 10px;
-  padding: 10px;
-}
-
-.item {
-  background: rgb(0, 0, 0, 0.1);
-  padding: 10px;
-  margin: 10px;
-}

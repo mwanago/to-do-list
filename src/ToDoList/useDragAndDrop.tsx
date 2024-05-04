@@ -1,30 +1,21 @@
-import { useState, DragEvent } from 'react';
-import { useInput } from './useInput';
-import { useList } from './useList.tsx';
+import { DragEvent, useState } from 'react';
 
-export function useToDoList() {
-  const { handleInputChange, newItem, clearInput } = useInput();
+interface Props {
+  addCompletedItem: (item: string) => void;
+  addToDoItem: (item: string) => void;
+  removeToDoItem: (item: string) => void;
+  removeCompletedItem: (item: string) => void;
+}
 
+export function useDragAndDrop({
+  addCompletedItem,
+  addToDoItem,
+  removeToDoItem,
+  removeCompletedItem,
+}: Props) {
   const [currentlyDraggedItem, setCurrentlyDraggedItem] = useState<
     string | null
   >(null);
-
-  const {
-    items: toDoItems,
-    removeItem: removeToDoItem,
-    addItem: addToDoItem,
-  } = useList();
-
-  const {
-    items: completedItems,
-    removeItem: removeCompletedItem,
-    addItem: addCompletedItem,
-  } = useList();
-
-  const handleNewItem = () => {
-    addToDoItem(newItem);
-    clearInput();
-  };
 
   const startDragging = (item: string) => () => {
     setCurrentlyDraggedItem(item);
@@ -49,11 +40,6 @@ export function useToDoList() {
   };
 
   return {
-    handleInputChange,
-    handleNewItem,
-    newItem,
-    toDoItems,
-    completedItems,
     startDragging,
     handleDropOnCompleted,
     handleDropOnToDo,

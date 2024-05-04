@@ -1,18 +1,40 @@
-import { useToDoList } from './useToDoList';
 import styles from './ToDoList.module.css';
+import { List } from './List';
+import { useInput } from './useInput';
+import { useList } from './useList';
+import { useDragAndDrop } from './useDragAndDrop';
 
 export const ToDoList = () => {
+  const { handleInputChange, newItem, clearInput } = useInput();
+
   const {
-    handleInputChange,
-    handleNewItem,
-    newItem,
-    toDoItems,
-    completedItems,
+    items: toDoItems,
+    removeItem: removeToDoItem,
+    addItem: addToDoItem,
+  } = useList();
+
+  const {
+    items: completedItems,
+    removeItem: removeCompletedItem,
+    addItem: addCompletedItem,
+  } = useList();
+
+  const handleNewItem = () => {
+    addToDoItem(newItem);
+    clearInput();
+  };
+
+  const {
     handleDragOver,
     handleDropOnToDo,
-    startDragging,
     handleDropOnCompleted,
-  } = useToDoList();
+    startDragging,
+  } = useDragAndDrop({
+    addToDoItem,
+    addCompletedItem,
+    removeCompletedItem,
+    removeToDoItem,
+  });
 
   return (
     <div>
@@ -25,44 +47,20 @@ export const ToDoList = () => {
         <button onClick={handleNewItem}>Add</button>
       </div>
       <div className={styles.listWrapper}>
-        <div
-          className={styles.list}
+        <List
+          items={toDoItems}
+          title="To do:"
+          onStartDragging={startDragging}
           onDragOver={handleDragOver}
           onDrop={handleDropOnToDo}
-        >
-          <h3>To do:</h3>
-          <div>
-            {toDoItems.map((item) => (
-              <p
-                className={styles.item}
-                key={item}
-                draggable
-                onDragStart={startDragging(item)}
-              >
-                {item}
-              </p>
-            ))}
-          </div>
-        </div>
-        <div
-          className={styles.list}
+        />
+        <List
+          items={completedItems}
+          title="Completed:"
+          onStartDragging={startDragging}
           onDragOver={handleDragOver}
           onDrop={handleDropOnCompleted}
-        >
-          <h3>Completed:</h3>
-          <div>
-            {completedItems.map((item) => (
-              <p
-                className={styles.item}
-                key={item}
-                draggable
-                onDragStart={startDragging(item)}
-              >
-                {item}
-              </p>
-            ))}
-          </div>
-        </div>
+        />
       </div>
     </div>
   );
