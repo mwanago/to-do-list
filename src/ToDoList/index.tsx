@@ -53,6 +53,7 @@ export const ToDoList = () => {
           onStartDragging={startDragging}
           onDragOver={handleDragOver}
           onDrop={handleDropOnToDo}
+          data-testid="to-do-list"
         />
         <List
           items={completedItems}
@@ -60,6 +61,7 @@ export const ToDoList = () => {
           onStartDragging={startDragging}
           onDragOver={handleDragOver}
           onDrop={handleDropOnCompleted}
+          data-testid="completed-list"
         />
       </div>
     </div>

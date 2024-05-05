@@ -7,6 +7,7 @@ interface Props {
   onStartDragging: (item: string) => () => void;
   onDragOver: (event: DragEvent) => void;
   onDrop: () => void;
+  'data-testid'?: string;
 }
 
 export const List: FunctionComponent<Props> = ({
@@ -15,9 +16,15 @@ export const List: FunctionComponent<Props> = ({
   onStartDragging,
   onDragOver,
   onDrop,
+  'data-testid': dataTestId,
 }) => {
   return (
-    <div className={styles.list} onDragOver={onDragOver} onDrop={onDrop}>
+    <div
+      className={styles.list}
+      onDragOver={onDragOver}
+      onDrop={onDrop}
+      data-testid={dataTestId}
+    >
       <h3>{title}</h3>
       <div>
         {items.map((item) => (
