@@ -1,6 +1,6 @@
 import { ChangeEvent, useState } from 'react';
 
-export function useInput() {
+export function useNewItemInput() {
   const [newItem, setNewItem] = useState('');
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {

@@ -1,11 +1,11 @@
 import styles from './ToDoList.module.css';
 import { List } from './List';
-import { useInput } from './useInput';
+import { useNewItemInput } from './useNewItemInput';
 import { useList } from './useList';
 import { useDragAndDrop } from './useDragAndDrop';
 
 export const ToDoList = () => {
-  const { handleInputChange, newItem, clearInput } = useInput();
+  const { handleInputChange, newItem, clearInput } = useNewItemInput();
 
   const {
     items: toDoItems,

@@ -13,9 +13,10 @@ export function useDragAndDrop({
   removeToDoItem,
   removeCompletedItem,
 }: Props) {
-  const [currentlyDraggedItem, setCurrentlyDraggedItem] = useState<
-    string | null
-  >(null);
+  const [
+    currentlyDraggedItem,
+    setCurrentlyDraggedItem
+  ] = useState<string | null>(null);
 
   const startDragging = (item: string) => () => {
     setCurrentlyDraggedItem(item);
